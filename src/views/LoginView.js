@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { authOperations } from '../redux/auth';
+// import { authOperations } from '../redux/auth';
 
 const styles = {
   form: {
@@ -31,7 +31,7 @@ export default function LoginView() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(authOperations.logIn({ email, password }));
+    // dispatch(authOperations.logIn({ email, password }));
     setEmail('');
     setPassword('');
   };

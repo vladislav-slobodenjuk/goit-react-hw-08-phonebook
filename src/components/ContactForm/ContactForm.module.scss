@@ -1,6 +1,7 @@
 .mainForm {
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .label {
@@ -14,6 +15,7 @@
 }
 
 .submitButton {
-  width: 100px;
+  align-self: center;
+  width: 140px;
   cursor: pointer;
 }
