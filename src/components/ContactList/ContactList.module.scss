@@ -1,0 +1,18 @@
+.contactItem {
+  display: flex;
+  justify-content: space-between;
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+.contactName,
+.contactButton {
+  display: inline-block;
+}
+
+.contactButton {
+  height: 20px;
+  align-self: center;
+  cursor: pointer;
+}

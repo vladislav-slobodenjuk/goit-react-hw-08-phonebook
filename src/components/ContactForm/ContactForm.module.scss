@@ -1,0 +1,19 @@
+.mainForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  display: inline-block;
+}
+
+.nameInput,
+.telInput {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.submitButton {
+  width: 100px;
+  cursor: pointer;
+}
