@@ -30,7 +30,7 @@ export default function App() {
         <Route exact path="/" component={HomeView} />
         <Route path="/register" component={RegisterView} />
         <Route path="/login" component={LoginView} />
-        <Route path="/todos" component={Phonebook} />
+        <Route path="/phonebook" component={Phonebook} />
       </Switch>
     </Container>
   );

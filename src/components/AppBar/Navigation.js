@@ -21,7 +21,7 @@ const Navigation = () => (
     </NavLink>
 
     <NavLink
-      to="/todos"
+      to="/phonebook"
       exact
       style={styles.link}
       activeStyle={styles.activeLink}
