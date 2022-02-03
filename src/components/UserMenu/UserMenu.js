@@ -1,5 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { authSelectors, authOperations } from 'redux/auth';
+// import { authSelectors, authOperations } from 'redux/auth';
+import authOperations from 'redux/auth/auth-operations';
+import authSelectors from 'redux/auth/auth-selectors';
 import defaultAvatar from './default-avatar.png';
 
 const styles = {

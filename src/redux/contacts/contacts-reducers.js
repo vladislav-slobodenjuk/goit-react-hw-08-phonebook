@@ -8,8 +8,6 @@ import {
 
 const itemsReducer = createReducer([], {
   [fetchContacts.fulfilled]: (_state, { payload }) => {
-    if (payload.type !== Array) return [];
-    // надо ли?
     return payload;
   },
   [AddContact.fulfilled]: (state, { payload }) => {
@@ -19,7 +17,7 @@ const itemsReducer = createReducer([], {
     // alert('contact is added');
   },
   [deleteContact.fulfilled]: (state, { payload }) => {
-    return state.filter(contact => contact.id !== payload.id);
+    return state.filter(contact => contact.id !== payload);
   },
 });
 

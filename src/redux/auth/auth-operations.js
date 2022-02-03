@@ -73,19 +73,18 @@ const logOut = createAsyncThunk('auth/logout', async () => {
  * 3. Если токен есть, добавляет его в HTTP-заголовок и выполянем операцию
  */
 const fetchCurrentUser = createAsyncThunk(
-  'auth/refresh',
+  'auth/fetchCurrent',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
 
     if (persistedToken === null) {
-      console.log('Токена нет, уходим из fetchCurrentUser');
       return thunkAPI.rejectWithValue();
     }
-
-    // token.set(persistedToken);
+    token.set(persistedToken);
     try {
       const { data } = await axios.get('/users/current');
+      console.log(data);
       return data;
     } catch (error) {
       // TODO: Добавить обработку ошибки error.message
@@ -93,10 +92,10 @@ const fetchCurrentUser = createAsyncThunk(
   },
 );
 
-const operations = {
+const authOperations = {
   register,
   logOut,
   logIn,
   fetchCurrentUser,
 };
-export default operations;
+export default authOperations;

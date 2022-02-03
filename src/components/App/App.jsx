@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
+import authOperations from 'redux/auth/auth-operations';
 
 import Container from 'components/Container/Container';
 import AppBar from 'components/AppBar/AppBar';
@@ -12,9 +13,9 @@ import Phonebook from 'views/PhonebookView';
 export default function App() {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(fetchContacts());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(authOperations.fetchCurrentUser());
+  }, [dispatch]);
 
   return (
     <Container>
