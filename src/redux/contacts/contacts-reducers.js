@@ -6,14 +6,17 @@ import {
   deleteContact,
 } from 'redux/contacts/contacts-operations';
 
-const ItemsReducer = createReducer([], {
+const itemsReducer = createReducer([], {
   [fetchContacts.fulfilled]: (_state, { payload }) => {
+    if (payload.type !== Array) return [];
+    // надо ли?
     return payload;
   },
   [AddContact.fulfilled]: (state, { payload }) => {
-    const isAdded = state.find(contact => contact.name === payload.name);
-    if (!isAdded) return [...state, payload];
-    alert('contact is added');
+    // const isAdded = state.find(contact => contact.name === payload.name);
+    // if (!isAdded) return [...state, payload];
+    return [...state, payload];
+    // alert('contact is added');
   },
   [deleteContact.fulfilled]: (state, { payload }) => {
     return state.filter(contact => contact.id !== payload.id);
@@ -25,7 +28,7 @@ const filterReducer = createReducer('', {
 });
 
 export const contactsReducer = combineReducers({
-  items: ItemsReducer,
+  items: itemsReducer,
   filter: filterReducer,
 });
 

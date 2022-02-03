@@ -15,16 +15,16 @@ import logger from 'redux-logger';
 import { contactsReducer } from './contacts/contacts-reducers';
 import { authReducer } from './auth';
 
-// const authPersistConfig = {
-//   key: 'auth',
-//   storage,
-//   whitelist: ['token'],
-// };
+const authPersistConfig = {
+  key: 'auth',
+  storage,
+  whitelist: ['token'],
+};
 
 export const store = configureStore({
   reducer: {
-    // auth: persistReducer(authPersistConfig, authReducer),
-    auth: authReducer,
+    auth: persistReducer(authPersistConfig, authReducer),
+    // auth: authReducer,
     contacts: contactsReducer,
   },
   devTools: process.env.NODE_ENV === 'development',

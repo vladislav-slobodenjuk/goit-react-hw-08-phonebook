@@ -5,8 +5,8 @@ import { deleteContact } from 'redux/contacts/contacts-operations';
 import s from './ContactList.module.scss';
 
 export default function ContactList() {
-  const dispatch = useDispatch();
   const filteredArray = useSelector(selectFilteredContacts);
+  const dispatch = useDispatch();
 
   return (
     <ul className={s.contactList}>

@@ -9,12 +9,6 @@ import RegisterView from 'views/RegisterView';
 import LoginView from 'views/LoginView';
 import Phonebook from 'views/PhonebookView';
 
-// import { fetchContacts } from 'redux/contacts/contacts-operations';
-// import ContactForm from 'components/ContactForm/ContactForm';
-// import ContactList from 'components/ContactList/ContactList';
-// import Filter from 'components/Filter/Filter';
-// import s from './App.module.scss';
-
 export default function App() {
   const dispatch = useDispatch();
 
