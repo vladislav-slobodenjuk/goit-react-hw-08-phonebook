@@ -1,7 +1,8 @@
 import { useEffect, lazy, Suspense } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Switch } from 'react-router-dom';
 import authOperations from 'redux/auth/auth-operations';
+import authSelectors from 'redux/auth/auth-selectors';
 
 import Container from 'components/Container/Container';
 import AppBar from 'components/AppBar/AppBar';
@@ -15,34 +16,37 @@ const Phonebook = lazy(() => import('views/PhonebookView'));
 
 export default function App() {
   const dispatch = useDispatch();
+  const isRefreshing = useSelector(authSelectors.selectIsRefreshing);
 
   useEffect(() => {
     dispatch(authOperations.fetchCurrentUser());
   }, [dispatch]);
 
   return (
-    <Container>
-      <AppBar />
+    !isRefreshing && (
+      <Container>
+        <AppBar />
 
-      <Switch>
-        <Suspense fallback={<p>Загрузка...</p>}>
-          <PublicRoute exact path="/">
-            <HomeView />
-          </PublicRoute>
+        <Switch>
+          <Suspense fallback={<p>Загрузка...</p>}>
+            <PublicRoute exact path="/">
+              <HomeView />
+            </PublicRoute>
 
-          <PublicRoute path="/register" restricted>
-            <RegisterView />
-          </PublicRoute>
+            <PublicRoute path="/register" restricted>
+              <RegisterView />
+            </PublicRoute>
 
-          <PublicRoute path="/login" redirectTo="/phonebook" restricted>
-            <LoginView />
-          </PublicRoute>
+            <PublicRoute path="/login" redirectTo="/phonebook" restricted>
+              <LoginView />
+            </PublicRoute>
 
-          <PrivateRoute path="/phonebook">
-            <Phonebook />
-          </PrivateRoute>
-        </Suspense>
-      </Switch>
-    </Container>
+            <PrivateRoute path="/phonebook">
+              <Phonebook />
+            </PrivateRoute>
+          </Suspense>
+        </Switch>
+      </Container>
+    )
   );
 }
