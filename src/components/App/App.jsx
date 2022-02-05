@@ -6,8 +6,9 @@ import authSelectors from 'redux/auth/auth-selectors';
 
 import Container from 'components/Container/Container';
 import AppBar from 'components/AppBar/AppBar';
-import PrivateRoute from 'components/AppBar/PrivateRoute';
-import PublicRoute from 'components/AppBar/PublicRoute';
+import PrivateRoute from 'components/App/PrivateRoute';
+import PublicRoute from 'components/App/PublicRoute';
+import Spinner from 'components/Spinner/Spinner';
 
 const HomeView = lazy(() => import('views/HomeView'));
 const RegisterView = lazy(() => import('views/RegisterView'));
@@ -28,7 +29,7 @@ export default function App() {
         <AppBar />
 
         <Switch>
-          <Suspense fallback={<p>Загрузка...</p>}>
+          <Suspense fallback={<Spinner />}>
             <PublicRoute exact path="/">
               <HomeView />
             </PublicRoute>
