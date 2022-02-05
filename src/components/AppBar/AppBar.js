@@ -4,6 +4,7 @@ import UserMenu from 'components/UserMenu';
 import AuthNav from './AuthNav';
 // import { authSelectors } from 'redux/auth';
 import authSelectors from 'redux/auth/auth-selectors';
+
 const styles = {
   header: {
     display: 'flex',

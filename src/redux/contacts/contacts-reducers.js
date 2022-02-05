@@ -2,20 +2,13 @@ import { createReducer, combineReducers } from '@reduxjs/toolkit';
 import { setContactsFilter } from './contacts-actions';
 import {
   fetchContacts,
-  AddContact,
+  addContact,
   deleteContact,
 } from 'redux/contacts/contacts-operations';
 
 const itemsReducer = createReducer([], {
-  [fetchContacts.fulfilled]: (_state, { payload }) => {
-    return payload;
-  },
-  [AddContact.fulfilled]: (state, { payload }) => {
-    // const isAdded = state.find(contact => contact.name === payload.name);
-    // if (!isAdded) return [...state, payload];
-    return [...state, payload];
-    // alert('contact is added');
-  },
+  [fetchContacts.fulfilled]: (_state, { payload }) => payload,
+  [addContact.fulfilled]: (state, { payload }) => [...state, payload],
   [deleteContact.fulfilled]: (state, { payload }) => {
     return state.filter(contact => contact.id !== payload);
   },

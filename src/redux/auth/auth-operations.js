@@ -1,21 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// const userInstance = axios.create({
-//   baseURL: 'https://connections-api.herokuapp.com',
-//   timeout: 2000,
-// });
-// userInstance.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
 const token = {
   set(token) {
-    // userInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   },
   unset() {
-    // userInstance.defaults.headers.common.Authorization = '';
     axios.defaults.headers.common.Authorization = '';
   },
 };
@@ -29,6 +21,8 @@ const register = createAsyncThunk('auth/register', async credentials => {
   try {
     const { data } = await axios.post('/users/signup', credentials);
     token.set(data.token);
+    //toast
+
     return data;
   } catch (error) {
     // TODO: Добавить обработку ошибки error.message
@@ -40,29 +34,44 @@ const register = createAsyncThunk('auth/register', async credentials => {
  * body: {  "email": "string",  "password": "string"}
  * После успешного логина добавляем токен в HTTP-заголовок
  */
-const logIn = createAsyncThunk('auth/login', async credentials => {
-  try {
-    const { data } = await axios.post('/users/login', credentials);
-    token.set(data.token);
-    return data;
-  } catch (error) {
-    // TODO: Добавить обработку ошибки error.message
-  }
-});
+const logIn = createAsyncThunk(
+  'auth/login',
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post('/users/login', credentials);
+      token.set(data.token);
+      return data;
+    } catch (error) {
+      console.dir(error);
+
+      if (error.response.status === 400) {
+        // toast('неверная почта или пароль')
+        console.log('неверная почта или пароль');
+      }
+      return rejectWithValue(error.message);
+
+      // TODO: Добавить обработку ошибки error.message
+    }
+  },
+);
 
 /*
  * POST @ /users/logout
  * headers: Authorization: Bearer token
  * После успешного логаута, удаляем токен из HTTP-заголовка
  */
-const logOut = createAsyncThunk('auth/logout', async () => {
-  try {
-    await axios.post('/users/logout');
-    token.unset();
-  } catch (error) {
-    // TODO: Добавить обработку ошибки error.message
-  }
-});
+const logOut = createAsyncThunk(
+  'auth/logout',
+  async (_args, { rejectWithValue }) => {
+    try {
+      await axios.post('/users/logout');
+      token.unset();
+    } catch (error) {
+      //  return thunkAPI.rejectWithValue()
+      // TODO: Добавить обработку ошибки error.message
+    }
+  },
+);
 /*
  * GET @ /users/current
  * headers:
@@ -74,7 +83,7 @@ const logOut = createAsyncThunk('auth/logout', async () => {
  */
 const fetchCurrentUser = createAsyncThunk(
   'auth/fetchCurrent',
-  async (_, thunkAPI) => {
+  async (_args, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
 
@@ -84,7 +93,6 @@ const fetchCurrentUser = createAsyncThunk(
     token.set(persistedToken);
     try {
       const { data } = await axios.get('/users/current');
-      console.log(data);
       return data;
     } catch (error) {
       // TODO: Добавить обработку ошибки error.message

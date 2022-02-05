@@ -20,7 +20,7 @@ export default function RegisterView() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleChange = ({ target: { name, value } }) => {
+  const handleInputChange = ({ target: { name, value } }) => {
     switch (name) {
       case 'name':
         return setName(value);
@@ -48,7 +48,12 @@ export default function RegisterView() {
       <form onSubmit={handleSubmit} style={styles.form} autoComplete="off">
         <label style={styles.label}>
           Имя
-          <input type="text" name="name" value={name} onChange={handleChange} />
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={handleInputChange}
+          />
         </label>
 
         <label style={styles.label}>
@@ -57,7 +62,7 @@ export default function RegisterView() {
             type="email"
             name="email"
             value={email}
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
         </label>
 
@@ -67,7 +72,7 @@ export default function RegisterView() {
             type="password"
             name="password"
             value={password}
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
         </label>
 
