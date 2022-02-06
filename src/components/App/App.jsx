@@ -1,6 +1,8 @@
 import { useEffect, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { Zoom } from 'react-toastify';
 import authOperations from 'redux/auth/auth-operations';
 import authSelectors from 'redux/auth/auth-selectors';
 
@@ -47,6 +49,7 @@ export default function App() {
             </PrivateRoute>
           </Suspense>
         </Switch>
+        <ToastContainer autoClose={4000} theme="colored" transition={Zoom} />
       </Container>
     )
   );

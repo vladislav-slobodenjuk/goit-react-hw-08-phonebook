@@ -1,13 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-// axios.defaults.baseURL = 'https://61f1c37d072f86001749f37f.mockapi.io';
+import { toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
   async (_args, { rejectWithValue }) => {
     try {
       const { data } = await axios.get('contacts');
-      //toast
+      toast.success('Вот ваши божественные контакты');
 
       return data;
     } catch (error) {
@@ -26,13 +28,13 @@ export const addContact = createAsyncThunk(
 
     const isAdded = contacts.find(contact => contact.name === newContact.name);
     if (isAdded) {
-      alert('contact is added');
-      //toast
-      return rejectWithValue('contact is added');
+      toast.error('Такой контакт уже есть');
+      return rejectWithValue('contact is already added');
     }
 
     try {
       const { data } = await axios.post('contacts', newContact);
+      toast.success('Контакт добавлен');
 
       return data;
     } catch (error) {
@@ -48,8 +50,7 @@ export const deleteContact = createAsyncThunk(
     try {
       // eslint-disable-next-line no-unused-vars
       const deleteResult = await axios.delete(`contacts/${contactId}`);
-      alert('contact is deleted');
-      // toast
+      toast.warn('Контак удален');
 
       return contactId;
     } catch (error) {

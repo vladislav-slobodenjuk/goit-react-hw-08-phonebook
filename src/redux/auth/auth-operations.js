@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
@@ -14,23 +15,29 @@ const token = {
 
 /*
 POST /users​/signup
- * body: {  "name": "Adrian Cross",  "email": "across@mail.com",  "password": "examplepassword"}
+ * body: {  "name": "User Name",  "email": "user@mail.com",  "password": "examplepassword"}
  * После успешной регистрации добавляем токен в HTTP-заголовок
  */
-const register = createAsyncThunk('auth/register', async credentials => {
-  try {
-    const { data } = await axios.post('/users/signup', credentials);
-    token.set(data.token);
-    //toast
+const register = createAsyncThunk(
+  'auth/register',
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post('/users/signup', credentials);
+      token.set(data.token);
+      toast.success('Вы успешно зарегестрировались');
 
-    return data;
-  } catch (error) {
-    // TODO: Добавить обработку ошибки error.message
-  }
-});
+      return data;
+    } catch (error) {
+      console.dir(error);
+      toast.error('Что-то пошло не так 😕');
+
+      return rejectWithValue(error.message);
+    }
+  },
+);
 
 /*
- * POST @ /users/login
+ * POST  /users/login
  * body: {  "email": "string",  "password": "string"}
  * После успешного логина добавляем токен в HTTP-заголовок
  */
@@ -40,23 +47,23 @@ const logIn = createAsyncThunk(
     try {
       const { data } = await axios.post('/users/login', credentials);
       token.set(data.token);
+      toast.success('Вы успешно авторизовались');
+
       return data;
     } catch (error) {
       console.dir(error);
 
       if (error.response.status === 400) {
-        // toast('неверная почта или пароль')
-        console.log('неверная почта или пароль');
+        toast.error('неверная почта или пароль');
       }
-      return rejectWithValue(error.message);
 
-      // TODO: Добавить обработку ошибки error.message
+      return rejectWithValue(error.message);
     }
   },
 );
 
 /*
- * POST @ /users/logout
+ * POST  /users/logout
  * headers: Authorization: Bearer token
  * После успешного логаута, удаляем токен из HTTP-заголовка
  */
@@ -66,14 +73,17 @@ const logOut = createAsyncThunk(
     try {
       await axios.post('/users/logout');
       token.unset();
+      toast.warn('Вы вышли из профиля');
     } catch (error) {
-      //  return thunkAPI.rejectWithValue()
-      // TODO: Добавить обработку ошибки error.message
+      console.dir(error);
+      toast.error('Что-то пошло не так 😕');
+
+      return rejectWithValue(error.message);
     }
   },
 );
 /*
- * GET @ /users/current
+ * GET  /users/current
  * headers:
  *    Authorization: Bearer token
  *
@@ -88,14 +98,18 @@ const fetchCurrentUser = createAsyncThunk(
     const persistedToken = state.auth.token;
 
     if (persistedToken === null) {
-      return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue('token is absent');
     }
     token.set(persistedToken);
     try {
       const { data } = await axios.get('/users/current');
+
       return data;
     } catch (error) {
-      // TODO: Добавить обработку ошибки error.message
+      console.dir(error);
+      toast.error('Что-то пошло не так 😕');
+
+      return thunkAPI.rejectWithValue(error.message);
     }
   },
 );
