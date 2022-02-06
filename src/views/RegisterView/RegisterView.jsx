@@ -1,18 +1,8 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { authOperations } from 'redux/auth';
 import authOperations from 'redux/auth/auth-operations';
 
-const styles = {
-  form: {
-    width: 320,
-  },
-  label: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: 15,
-  },
-};
+import styles from './RegisterView.module.scss';
 
 export default function RegisterView() {
   const dispatch = useDispatch();
@@ -36,17 +26,17 @@ export default function RegisterView() {
   const handleSubmit = e => {
     e.preventDefault();
     dispatch(authOperations.register({ name, email, password }));
-    // setName('');
-    // setEmail('');
-    // setPassword('');
+    setName('');
+    setEmail('');
+    setPassword('');
   };
 
   return (
     <div>
       <h1>Страница регистрации</h1>
 
-      <form onSubmit={handleSubmit} style={styles.form} autoComplete="off">
-        <label style={styles.label}>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <label className={styles.label}>
           Имя
           <input
             type="text"
@@ -56,7 +46,7 @@ export default function RegisterView() {
           />
         </label>
 
-        <label style={styles.label}>
+        <label className={styles.label}>
           Почта
           <input
             type="email"
@@ -66,7 +56,7 @@ export default function RegisterView() {
           />
         </label>
 
-        <label style={styles.label}>
+        <label className={styles.label}>
           Пароль
           <input
             type="password"

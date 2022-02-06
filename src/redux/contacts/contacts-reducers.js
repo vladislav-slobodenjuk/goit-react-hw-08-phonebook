@@ -22,7 +22,3 @@ export const contactsReducer = combineReducers({
   items: itemsReducer,
   filter: filterReducer,
 });
-
-export const rootReducer = combineReducers({
-  contacts: contactsReducer,
-});

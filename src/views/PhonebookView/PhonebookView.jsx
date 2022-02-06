@@ -7,7 +7,7 @@ import ContactForm from 'components/ContactForm/ContactForm';
 import ContactList from 'components/ContactList/ContactList';
 import Filter from 'components/Filter/Filter';
 
-import s from 'components/App/App.module.scss';
+import styles from './PhonebookView.module.scss';
 
 export default function Phonebook() {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export default function Phonebook() {
 
   return (
     <Container>
-      <div className={s.app}>
+      <div className={styles.wrapper}>
         <h1>Phonebook</h1>
         <ContactForm />
         <h2>Contacts</h2>

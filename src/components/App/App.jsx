@@ -12,10 +12,10 @@ import PrivateRoute from 'components/App/PrivateRoute';
 import PublicRoute from 'components/App/PublicRoute';
 import Spinner from 'components/Spinner/Spinner';
 
-const HomeView = lazy(() => import('views/HomeView'));
-const RegisterView = lazy(() => import('views/RegisterView'));
-const LoginView = lazy(() => import('views/LoginView'));
-const Phonebook = lazy(() => import('views/PhonebookView'));
+const HomeView = lazy(() => import('views/HomeView/HomeView'));
+const RegisterView = lazy(() => import('views/RegisterView/RegisterView'));
+const LoginView = lazy(() => import('views/LoginView/LoginView'));
+const Phonebook = lazy(() => import('views/PhonebookView/PhonebookView'));
 
 export default function App() {
   const dispatch = useDispatch();
